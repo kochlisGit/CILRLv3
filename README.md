@@ -129,9 +129,9 @@ RAY_DEDUP_LOGS=0 PYTHONPATH=. python3 train/train_ppo.py
 
 **NOTE**: Take a look bellow for option for the environment.
 
-### PPG
+### PPG/SAC
 
-As in PPO algorithm, the PPG algorithm can be configured from the
+As in PPO algorithm, the PPG or SAC algorithm can be configured from the
 [train_ppg_config.yaml](train/configs/train_ppg_config.yaml) file. This file
 controls the algorithm related option for the training. Take a look at the file
 for the training options. 
@@ -143,6 +143,8 @@ In order to run the training you can use the command:
 
 ```bash
 RAY_DEDUP_LOGS=0 PYTHONPATH=. python3 train/train_ppg.py
+or
+RAY_DEDUP_LOGS=0 PYTHONPATH=. python3 train/train_sac.py
 ```
 
 **NOTE**: Take a look bellow for option for the environment.
@@ -193,68 +195,6 @@ In the RL training there are two options for running the Carla server.
      [launch_carla_server.sh](train/launch_carla_server.sh) example script. You
      can modify it for your needs and use it (`carla_launch_script: "bash
      train/launch_carla_server.sh"`).
-
-# Results
-
-We evaluated the models in the [Leaderboard
-1.0](https://github.com/carla-simulator/leaderboard/tree/leaderboard-1.0) using
-the Carla version 0.9.15. The evaluated the following models:
-
-1. **CIL++**: The [CIL++](https://github.com/yixiao1/CILv2_multiview) model.
-2. **CIL++ (stochastic)**: Our stochastic version of the CIL++ model. This model
-   has a stochastic output and is trained on the same data as the CIL++.
-3. **RL**: The RL fine tuned model.
-
-## Model weights access
-
-You can get the model weights in the
-[drive](https://drive.google.com/drive/folders/1WLvEa-ZPF_Pe69N6DZjMK-luVsNVZ8in?usp=sharing).
-The following models are provided:
-
-1. **CIL++ (stochastic)**: Named `CIL_multiview_actor_critic_stochastic.pth`.
-2. **RL**: Named `CIL_multiview_actor_critic_ppg.pth`.
-
-## Leaderboard 1.0 test routes
-
-We used the Leaderboard 1.0 test routes for the evaluation.
-
-| **Metric **                      | **CIL++** | **CIL++ (stochastic)** | **RL**      |
-|----------------------------------|-----------|------------------------|-------------|
-| **Avg. driving score↑**          | 2.593     | 3.047                  | **10.019**  |
-| **Avg. route completion↑**       | 10.932    | 8.293                  | **14.484**  |
-| **Avg. infraction penalty↑**     | 0.404     | 0.461                  | **0.654**   |
-| **Collisions with pedestrians↓** | **0.0**   | **0.0**                | **0.0**     |
-| **Collisions with vehicles↓**    | 256.214   | 247.457                | **52.842**  |
-| **Collisions with layout↓**      | 411.01    | 461.453                | **255.232** |
-| **Red lights infractions↓**      | 9.34      | **0.0**                | 7.975       |
-| **Stop sign infractions↓**       | 5.767     | **0.0**                | **0.0**     |
-| **Off-road infractions↓**        | 253.666   | 332.031                | **186.474** |
-| **Route deviations↓**            | **0.0**   | 104.91                 | 76.737      |
-| **Route timeouts↓**              | **0.0**   | **0.0**                | **0.0**     |
-| **Agent blocked↓**               | 398.996   | 362.588                | **222.645** |
-
-
-## longest6
-
-We used the [longest6](https://www.cvlibs.net/publications/Chitta2022PAMI.pdf)
-test.
-
-| **Metric **                      | **CIL++**  | **CIL++ (stochastic)** | **RL**      |
-|----------------------------------|------------|------------------------|-------------|
-| **Avg. driving score↑**          | 2.674      | 1.837                  | **5.69**    |
-| **Avg. route completion↑**       | 9.052      | 4.881                  | **11.182**  |
-| **Avg. infraction penalty↑**     | 0.357      | 0.4                    | **0.494**   |
-| **Collisions with pedestrians↓** | 5.29       | 16.767                 | **0.0**     |
-| **Collisions with vehicles↓**    | 262.602    | 392.410                | **105.94**  |
-| **Collisions with layout↓**      | 820.255    | 760.246                | **501.88**  |
-| **Red lights infractions↓**      | **27.854** | 117.091                | 115.987     |
-| **Stop sign infractions↓**       | 7.647      | **0.0**                | 3.617       |
-| **Off-road infractions↓**        | 543.098    | 559.018                | **330.344** |
-| **Route deviations↓**            | **42.459** | 138.670                | 101.009     |
-| **Route timeouts↓**              | **0.0**    | 7.055                  | **0.0**     |
-| **Agent blocked↓**               | 543.86     | 657.512                | **357.555** |
-
-# Citation
 
 Please cite our work if you found it useful:
 
